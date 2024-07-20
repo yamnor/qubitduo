@@ -260,7 +260,7 @@ const QubitSimulator = () => {
             onClick={resetQubitStates}
           >
             <RefreshCcw className="h-5 w-5" />
-            <span>Reset</span>
+            <span>Clear</span>
           </button>
         </div>
         <div className="w-full flex justify-center mb-4">

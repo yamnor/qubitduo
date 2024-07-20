@@ -70,7 +70,7 @@ To run this project locally, follow these steps:
 ### Resetting States and Histogram
 
 - **Reset Qubit States:** Click the `Reset` button to reset Alice and Bob to their initial states (0).
-- **Reset Histogram:** Click the `Reset` button below the histogram to clear the measurement results.
+- **Clear Histogram:** Click the `Clear` button below the histogram to clear the measurement results.
 
 ## Contact
 
