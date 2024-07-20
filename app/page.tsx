@@ -1,4 +1,5 @@
 import dynamic from 'next/dynamic'
+import { Analytics } from "@vercel/analytics/react"
 
 const QubitSimulator = dynamic(
   () => import('../components/QubitSimulator'),
