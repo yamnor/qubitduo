@@ -4,6 +4,8 @@
 
 Qubit Duo is available online at: https://qubitduo.vercel.app
 
+![](https://gyazo.com/03dcfd455fe4d3dddf6cfbfad5b0de72.png)
+
 ## Overview
 
 Qubit Duo is a quantum entanglement simulator that allows users to manipulate the states of two qubits (Alice and Bob) and apply quantum gates to observe their behavior. The simulator provides a visual and interactive way to understand quantum entanglement, superposition, and the effects of environmental noise.
