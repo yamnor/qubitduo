@@ -295,7 +295,7 @@ const QubitSimulator = () => {
             </div>
           </div>
           <div className="mb-4 flex flex-col items-center w-full md:w-1/2">
-            <h3 className="text-xl text-gray-500 mb-2 text-center">Histogram</h3>
+            <h3 className="text-xl text-gray-500 mb-2 text-center">Histogram ({measurementCount} times)</h3>
             <div className="w-full h-80">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={histogramData}>
