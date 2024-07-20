@@ -52,8 +52,8 @@ To run this project locally, follow these steps:
 
 ### Applying Quantum Gates
 
-- **Hadamard Gate (H):** Click the "H" button below the qubit to apply a Hadamard gate, creating a superposition state.
-- **CNOT Gate:** Click the "CNOT" button to entangle the qubits. The control qubit is Alice, and the target qubit is Bob.
+- **Hadamard (H) Gate:** Click the `H` button below the qubit to apply a Hadamard gate, creating a superposition state.
+- **CNOT Gate:** Click the `CNOT` button to entangle the qubits. The control qubit is Alice, and the target qubit is Bob.
 
 ### Adjusting Noise Level
 
@@ -69,8 +69,8 @@ To run this project locally, follow these steps:
 
 ### Resetting States and Histogram
 
-- **Reset Qubit States:** Click the "Reset" button to reset Alice and Bob to their initial states (0).
-- **Reset Histogram:** Click the "Reset" button below the histogram to clear the measurement results.
+- **Reset Qubit States:** Click the `Reset` button to reset Alice and Bob to their initial states (0).
+- **Reset Histogram:** Click the `Reset` button below the histogram to clear the measurement results.
 
 ## Contact
 

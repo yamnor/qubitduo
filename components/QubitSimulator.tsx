@@ -6,14 +6,15 @@ import { Slider } from './ui/slider';
 import { RefreshCcw, Trash2, HelpCircle } from 'lucide-react';
 import Modal from './ui/modal';
 
-const QuantumBit = ({ state, onClick, name }: { state: string; onClick: () => void; name: string }) => (
+const QuantumBit = ({ state, onClick, name, isNoisy }: { state: string; onClick: () => void; name: string, isNoisy: boolean }) => (
   <div 
     className={`w-20 h-20 rounded-full flex items-center justify-center text-2xl font-bold cursor-pointer
                 ${state === '0' ? 'bg-blue-500 text-white' : 
                   state === '1' ? 'bg-red-500 text-white' : 
                   state === '+' ? 'bg-gradient-superposition text-white' : 
                   state === '-' ? 'bg-gradient-superposition text-white' : 
-                  'bg-gradient-entangled text-white'}`}
+                  'bg-gradient-entangled text-white'}
+                ${isNoisy ? 'animate-bounce' : ''}`}
     onClick={onClick}
   >
     {state}
@@ -42,6 +43,7 @@ const QubitSimulator = () => {
   const [measurementCount, setMeasurementCount] = useState(0);
   const [isInitialized, setIsInitialized] = useState(true);
   const [isHelpModalOpen, setIsHelpModalOpen] = useState(false);
+  const [isNoisy, setIsNoisy] = useState(false);
 
   const MAX_NOISE_LEVEL = 0.1;
   const MAX_TIME_POINTS = 50;
@@ -84,6 +86,9 @@ const QubitSimulator = () => {
 
   const applyNoise = () => {
     if (Math.random() < noiseLevel) {
+      setIsNoisy(true);
+      setTimeout(() => setIsNoisy(false), 100); // Remove animation after 1 second
+  
       if (entangled) {
         if (Math.random() < 0.5) {
           setAlice(prev => prev === '0' ? '1' : '0');
@@ -118,6 +123,7 @@ const QubitSimulator = () => {
       if (prev === '-') return '1';
       return prev;
     });
+    checkEntanglement(alice, bob);
   };
 
   const applyCNOTGate = () => {
@@ -188,6 +194,7 @@ const QubitSimulator = () => {
     }
 
     updateStateDistribution(newAlice, newBob);
+    checkEntanglement(newAlice, newBob);
   };
 
   const resetQubitStates = () => {
@@ -211,7 +218,7 @@ const QubitSimulator = () => {
   }
 
   return (
-    <div className="w-full flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4 md:p-8">
+    <div className="w-full flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
       <div className="w-full max-w-7xl relative">
         <button
           className="absolute top-0 right-0 p-2 bg-gray-300 rounded-full hover:bg-gray-400"
@@ -219,11 +226,11 @@ const QubitSimulator = () => {
         >
           <HelpCircle className="h-6 w-6 text-gray-700" />
         </button>
-        <h1 className="text-3xl font-bold mb-4 text-center">Qubit Duo</h1>
-        <div className="flex flex-row flex-wrap justify-center items-center space-x-4 mb-4">
+        <h1 className="text-3xl font-bold mb-2 text-center">Qubit Duo</h1>
+        <div className="flex flex-row flex-wrap justify-center items-center space-x-4 mb-2">
           <div className="flex flex-col items-center">
-            <h2 className="text-xl mb-2">Alice</h2>
-            <QuantumBit state={alice} onClick={() => toggleQubit(alice, setAlice)} name="Alice" />
+            <h2 className="text-xl text-gray-500 mb-2">Alice</h2>
+            <QuantumBit state={alice} onClick={() => toggleQubit(alice, setAlice)} name="Alice" isNoisy={isNoisy} />
             <QuantumGate name="H" onClick={() => applyHadamardGate(alice, setAlice)} color="bg-green-500" />
             <button
               className="px-4 py-2 rounded bg-purple-500 hover:bg-purple-600 text-white font-bold mt-2"
@@ -236,8 +243,8 @@ const QubitSimulator = () => {
             <QuantumGate name="CNOT" onClick={applyCNOTGate} color="bg-yellow-500" />
           </div>
           <div className="flex flex-col items-center">
-            <h2 className="text-xl mb-2">Bob</h2>
-            <QuantumBit state={bob} onClick={() => toggleQubit(bob, setBob)} name="Bob" />
+            <h2 className="text-xl text-gray-500 mb-2">Bob</h2>
+            <QuantumBit state={bob} onClick={() => toggleQubit(bob, setBob)} name="Bob" isNoisy={isNoisy} />
             <QuantumGate name="H" onClick={() => applyHadamardGate(bob, setBob)} color="bg-green-500" />
             <button
               className="px-4 py-2 rounded bg-purple-500 hover:bg-purple-600 text-white font-bold mt-2"
@@ -271,25 +278,25 @@ const QubitSimulator = () => {
         </div>
         <div className="flex flex-col md:flex-row w-full md:space-x-4">
           <div className="mb-4 flex flex-col items-center w-full md:w-1/2">
-            <h3 className="text-xl font-bold mb-2 text-center">Time Evolution</h3>
-            <div className="w-full h-96">
+            <h3 className="text-xl text-gray-500 mb-2 text-center">Time Evolution</h3>
+            <div className="w-full h-80">
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={timeData}>
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis tick={false} />
-                  <YAxis domain={[0, 1]} />
+                  <YAxis domain={[0, 1]} tickCount={3} />
                   <Tooltip />
                   <Legend />
-                  <Line type="stepAfter" dataKey="alice" stroke="#ec4899" name="Alice" />
-                  <Line type="stepAfter" dataKey="bob" stroke="#0ea5e9" name="Bob" />
-                  <Line type="stepAfter" dataKey="entangled" stroke="#eab308" name="Entangled" />
+                  <Line type="stepAfter" dataKey="alice" stroke="#ec4899" strokeWidth={2} dot={false} name="Alice" />
+                  <Line type="stepAfter" dataKey="bob" stroke="#0ea5e9" strokeWidth={2} dot={false} name="Bob" />
+                  <Line type="stepAfter" dataKey="entangled" stroke="#eab308" strokeWidth={2} dot={false} name="Entangled" />
                 </LineChart>
               </ResponsiveContainer>
             </div>
           </div>
           <div className="mb-4 flex flex-col items-center w-full md:w-1/2">
-            <h3 className="text-xl font-bold mb-2 text-center">Histogram</h3>
-            <div className="w-full h-96">
+            <h3 className="text-xl text-gray-500 mb-2 text-center">Histogram</h3>
+            <div className="w-full h-80">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={histogramData}>
                   <CartesianGrid strokeDasharray="3 3" />
@@ -313,20 +320,20 @@ const QubitSimulator = () => {
       </div>
       {isHelpModalOpen && (
         <Modal onClose={() => setIsHelpModalOpen(false)}>
-          <h2 className="text-xl font-bold mb-4">Help & Information</h2>
+          <h2 className="text-xl font-bold mb-4">Help</h2>
           <p className="mb-4">This is a quantum entanglement simulator. You can manipulate the states of two qubits (Alice and Bob) and apply quantum gates to observe their behavior.</p>
-          <h3 className="text-lg font-semibold mb-2">Usage Instructions:</h3>
-          <ul className="list-disc list-inside mb-4">
+          <h3 className="text-lg font-semibold mb-2">Usage:</h3>
+          <ul className="list-disc list-outside mb-4 mx-4">
             <li>Click on the qubits (Alice or Bob) to toggle their states between 0 and 1.</li>
             <li>Use the H button to apply a Hadamard gate and create a superposition state.</li>
             <li>Use the CNOT button to entangle the qubits.</li>
             <li>Adjust the noise level using the slider to simulate environmental noise.</li>
           </ul>
-          <h3 className="text-lg font-semibold mb-2">Additional Resources:</h3>
-          <ul className="list-none mb-4">
-            <li><a href="https://github.com/yamnor/qubitduo" target="_blank" className="text-blue-500 hover:text-blue-700">GitHub: yamnor/qubitduo</a></li>
+          <h3 className="text-lg font-semibold mb-2">Info:</h3>
+          <ul className="list-disc list-outside mb-4 mx-4">
+            <li>GitHub: <a href="https://github.com/yamnor/qubitduo" target="_blank" className="text-blue-500 hover:text-blue-700">yamnor/qubitduo</a></li>
           </ul>
-          <p className="text-sm text-gray-500">Created by: Nori Yamamoto (<a href="https://x.com/yamnor" target="_blank" className="text-blue-500 hover:text-blue-700">@yamnor</a>)
+          <p className="text-sm text-gray-500">Developed by: Nori Yamamoto (<a href="https://x.com/yamnor" target="_blank" className="text-blue-500 hover:text-blue-700">@yamnor</a>)
           </p>
         </Modal>
       )}
