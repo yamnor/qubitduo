@@ -123,7 +123,6 @@ const QubitSimulator = () => {
       if (prev === '-') return '1';
       return prev;
     });
-    checkEntanglement(alice, bob);
   };
 
   const applyCNOTGate = () => {
@@ -194,7 +193,6 @@ const QubitSimulator = () => {
     }
 
     updateStateDistribution(newAlice, newBob);
-    checkEntanglement(newAlice, newBob);
   };
 
   const resetQubitStates = () => {
