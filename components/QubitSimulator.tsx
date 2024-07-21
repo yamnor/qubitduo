@@ -88,25 +88,11 @@ const QubitSimulator = () => {
     if (Math.random() < noiseLevel) {
       setIsNoisy(true);
       setTimeout(() => setIsNoisy(false), 100); // Remove animation after 1 second
-  
-      if (entangled) {
-        if (Math.random() < 0.5) {
-          setAlice(prev => prev === '0' ? '1' : '0');
-          setBob(prev => prev === '0' ? '1' : '0');
-        } else {
-          setEntangled(false);
-          const measurementResultAlice = Math.random() < 0.5 ? '0' : '1';
-          const measurementResultBob = Math.random() < 0.5 ? '0' : '1';
-          setAlice(measurementResultAlice);
-          setBob(measurementResultBob);
-        }
-      } else {
-        if (Math.random() < 0.5) {
-          setAlice(prev => prev === '0' ? '1' : prev === '1' ? '0' : prev);
-        } else {
-          setBob(prev => prev === '0' ? '1' : prev === '1' ? '0' : prev);
-        }
-      }
+      setEntangled(false);
+      const measurementResultAlice = Math.random() < 0.5 ? '0' : '1';
+      const measurementResultBob = Math.random() < 0.5 ? '0' : '1';
+      setAlice(measurementResultAlice);
+      setBob(measurementResultBob);
     }
   };
 
