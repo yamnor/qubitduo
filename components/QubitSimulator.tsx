@@ -112,7 +112,6 @@ const QubitSimulator = () => {
 
   const toggleQubit = (qubit: string, setQubit: React.Dispatch<React.SetStateAction<string>>) => {
     setQubit(prev => prev === '0' ? '1' : '0');
-    checkEntanglement(alice, bob);
   };
 
   const applyHadamardGate = (qubit: string, setQubit: React.Dispatch<React.SetStateAction<string>>) => {
