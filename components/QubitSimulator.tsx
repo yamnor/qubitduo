@@ -224,10 +224,10 @@ const QubitSimulator = () => {
         >
           <HelpCircle className="h-6 w-6 text-gray-700" />
         </button>
-        <h1 className="text-normal md:text-3xl font-bold mb-2 text-center">Qubit Duo</h1>
+        <h1 className="md:text-3xl font-bold mb-2 text-center">Qubit Duo</h1>
         <div className="flex flex-row flex-wrap justify-center items-center space-x-4 mb-2">
           <div className="flex flex-col items-center">
-            <h2 className="text-xl text-gray-500 mb-2">Alice</h2>
+            <h2 className="md:text-xl text-gray-500 mb-2">Alice</h2>
             <QuantumBit state={alice} onClick={() => toggleQubit(alice, setAlice)} name="Alice" isNoisy={isNoisy} />
             <QuantumGate name="H" onClick={() => applyHadamardGate(alice, setAlice)} color="bg-green-500" />
             <button
@@ -241,7 +241,7 @@ const QubitSimulator = () => {
             <QuantumGate name="CNOT" onClick={applyCNOTGate} color="bg-yellow-500" />
           </div>
           <div className="flex flex-col items-center">
-            <h2 className="text-xl text-gray-500 mb-2">Bob</h2>
+            <h2 className="md:text-xl text-gray-500 mb-2">Bob</h2>
             <QuantumBit state={bob} onClick={() => toggleQubit(bob, setBob)} name="Bob" isNoisy={isNoisy} />
             <QuantumGate name="H" onClick={() => applyHadamardGate(bob, setBob)} color="bg-green-500" />
             <button
@@ -276,7 +276,7 @@ const QubitSimulator = () => {
         </div>
         <div className="flex flex-col md:flex-row w-full md:space-x-4">
           <div className="mb-4 flex flex-col items-center w-full md:w-1/2">
-            <h3 className="text-xl text-gray-500 mb-2 text-center">Histogram ({measurementCount} times)</h3>
+            <h3 className="md:text-xl text-gray-500 mb-2 text-center">Histogram ({measurementCount} times)</h3>
             <div className="w-full md:h-80 h-48">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={histogramData}>
@@ -298,7 +298,7 @@ const QubitSimulator = () => {
             </button>
           </div>
           <div className="mb-4 flex flex-col items-center w-full md:w-1/2">
-            <h3 className="text-xl text-gray-500 mb-2 text-center">Time Evolution</h3>
+            <h3 className="md:text-xl text-gray-500 mb-2 text-center">Time Evolution</h3>
             <div className="w-full md:h-80 h-48">
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={timeData}>
